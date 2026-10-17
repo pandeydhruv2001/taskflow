@@ -2,6 +2,8 @@
 
 TaskFlow is a private, vanilla JavaScript Kanban board with boards, columns, tasks, recurring work, timers, analytics, import/export, undo/redo, and browser-local persistence.
 
+The visual system starts with `css/foundation.css`, which supplies layered modern CSS resets, tokens, responsive layout primitives, accessibility fallbacks, and reduced-motion behavior. Product-specific themes and components remain in the other CSS files.
+
 ## Run locally
 
 TaskFlow uses ES modules, so serve it over HTTP rather than opening `index.html` directly.

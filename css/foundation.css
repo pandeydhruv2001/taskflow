@@ -1,0 +1,52 @@
+/* TaskFlow's modern CSS foundation. Components may build on these layers. */
+@layer reset, tokens, base, layout, components, overrides;
+
+@layer reset {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { color-scheme: light dark; scroll-behavior: smooth; }
+  body, h1, h2, h3, p, figure { margin: 0; }
+  button, input, select, textarea { font: inherit; }
+  button, [role="button"] { -webkit-tap-highlight-color: transparent; }
+  img, svg, canvas { display: block; max-width: 100%; }
+}
+
+@layer tokens {
+  :root {
+    --topbar-h: 64px;
+    --radius-s: 8px;
+    --radius-m: 12px;
+    --radius-l: 16px;
+    --ease-standard: cubic-bezier(.2, .8, .2, 1);
+    --shadow-1: 0 1px 2px rgb(9 30 66 / .08), 0 2px 8px rgb(9 30 66 / .06);
+    --shadow-2: 0 12px 32px rgb(9 30 66 / .18);
+  }
+}
+
+@layer base {
+  body { min-height: 100dvh; font-optical-sizing: auto; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+  textarea { field-sizing: content; max-height: 40dvh; }
+  input[type="checkbox"] { accent-color: var(--success); }
+  ::selection { background: color-mix(in srgb, var(--accent) 32%, transparent); }
+}
+
+@layer layout {
+  .topbar { height: var(--topbar-h); backdrop-filter: blur(16px) saturate(1.35); -webkit-backdrop-filter: blur(16px) saturate(1.35); }
+  .workspace { min-height: calc(100dvh - var(--topbar-h)); }
+  .topbar-menu { top: calc(var(--topbar-h) + 8px); }
+  .board-columns { scrollbar-gutter: stable; overscroll-behavior-inline: contain; scroll-snap-type: x proximity; }
+}
+
+@layer components {
+  .kanban-column { container: taskflow-column / inline-size; }
+  .task-card { transition-timing-function: var(--ease-standard); }
+  @container taskflow-column (max-width: 260px) { .task-description { display: none; } .task-meta { gap: 4px; } }
+  .button-primary { background: linear-gradient(180deg, var(--accent), var(--accent-strong)); box-shadow: inset 0 1px 0 rgb(255 255 255 / .25), var(--shadow-1); }
+}
+
+@layer overrides {
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
+  @media (prefers-contrast: more) { :root { --line: light-dark(#475569, #cbd5e1); } }
+  @media (forced-colors: active) { .task-card { border: 1px solid CanvasText; } }
+}
